@@ -100,7 +100,85 @@ public static class Day5
 {
     public static void Run()
     {
+        string[] lines = TestInput.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+        long[] seeds = lines[0].Split(':', StringSplitOptions.RemoveEmptyEntries)[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
+
+        Dictionary<string, List<(long destination, long source, long range)>> maps = [];
+
+        string key = "";
+        for (long i = 1; i < lines.Length; i++)
+        {
+            string[] line = lines[i].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (line.Length == 2)
+            {
+                key = line[0];
+                maps[key] = [];
+                continue;
+            }
+
+            maps[key].Add((long.Parse(line[0]), long.Parse(line[1]), long.Parse(line[2])));
+        }
+
+        /*
+        Console.WriteLine($"{"Seeds:",14} {string.Join(" ", seeds)}");
+        Console.WriteLine($"{"",15}{"D",2} {"S",2} {"R",2}");
+        */
+
+        string source = "seed";
+        long[] sources = seeds;
+        string target = "location";
+        long lowest = long.MaxValue;
+
+        while (!string.IsNullOrWhiteSpace(source))
+        {
+            string convert = maps.Keys.First(i => i.Split('-', StringSplitOptions.RemoveEmptyEntries)[0] == source);
+            string currentTarget = convert.Split('-', StringSplitOptions.RemoveEmptyEntries)[2];
+
+            bool hitTarget = target == currentTarget;
+
+            List<long> validSources = [];
+
+            foreach ((long destination, long sourceValue, long range) in maps[convert])
+            {
+                Console.WriteLine($"{convert + ":",14} {destination,2} {sourceValue,2} {range,2}");
+
+
+                //Need to invert this to have sources look for destinations
+                foreach (long s in sources)
+                {
+                    Console.WriteLine($"Source: {sourceValue} - {sourceValue + range}");
+                    if (s >= sourceValue && s < sourceValue + range)
+                    {
+                        long d = destination + (s - sourceValue);
+
+                        validSources.Add(d);
+                        //Console.WriteLine($"{s}|{d}");
+                        if (hitTarget)
+                        {
+                            if (d < lowest)
+                            {
+                                lowest = d;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            if (hitTarget)
+            {
+                break;
+            }
+
+            source = currentTarget;
+            sources = [.. validSources];
+        }
+
+        Console.WriteLine($"Part 1: {lowest}");
+
     }
+
 
     public const string TestInput = @"
 seeds: 79 14 55 13
