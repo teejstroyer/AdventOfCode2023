@@ -108,7 +108,7 @@ Distance:  9  40  200 ";
             int maxHold = (int)max;
 
             int count = maxHold - minHold + 1;
-            Console.WriteLine($"{"Time:"}{race.time,5} {"Distance:",15}{race.distance,5} {"Speed:",15}{race.speed.ToString("0.##"),6} {"MinHold:",15}{minHold.ToString("0.##"),6} {"MaxHold:",15}{maxHold.ToString("0.##"),6} {"Count:",15}{count,6}");
+            //Console.WriteLine($"{"Time:"}{race.time,5} {"Distance:",15}{race.distance,5} {"Speed:",15}{race.speed.ToString("0.##"),6} {"MinHold:",15}{minHold.ToString("0.##"),6} {"MaxHold:",15}{maxHold.ToString("0.##"),6} {"Count:",15}{count,6}");
 
             product *= count;
         }
