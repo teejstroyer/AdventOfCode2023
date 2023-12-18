@@ -17,3 +17,6 @@ Day5.Run();
 
 PrintDay(6);
 Day6.Run();
+
+PrintDay(7);
+Day7.Run();
