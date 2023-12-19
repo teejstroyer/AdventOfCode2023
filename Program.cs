@@ -20,3 +20,6 @@ Day6.Run();
 
 PrintDay(7);
 Day7.Run();
+
+PrintDay(8);
+Day8.Run();
